@@ -47,6 +47,7 @@ main {
 }
 
 h1 {
+    position: relative;
     letter-spacing: 9px;
     color: var(--white);
     text-shadow: 1px 1px var(--secondary);
@@ -57,6 +58,56 @@ h1 {
     padding-top: 1.4rem;
     text-align: center;
 }
+
+#prev_button {
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    content:"\A";
+    border-style: solid;
+    border-width: 15px 20px 15px 0;
+    border-color: transparent var(--white) transparent transparent;
+    position: absolute;
+}
+
+#prev_button:hover {
+    transform: scale(1.25);
+    transition: all .1s ease-in-out;
+}
+
+#next_button {
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    content:"\A";
+    border-style: solid;
+    border-width: 15px 0px 15px 20px;
+    border-color: transparent  transparent transparent var(--white);
+    position: absolute;
+}
+
+#next_button:hover {
+    transform: scale(1.25);
+    transition: all .1s ease-in-out;
+}
+
+/* h1::after {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    content:"\A";
+    border-style: solid;
+    border-width: 15px 0px 15px 20px;
+    border-color: transparent  transparent transparent var(--white);
+    position: absolute;
+}
+
+h1:hover::after {
+    transform: scale(1.25);
+
+} */
 
 table {
     color: var(--white);;
@@ -105,7 +156,6 @@ th {
     text-shadow: 1px 1px var(--secondary);
     font-weight: 600;
     font-size: 1.6rem;
-    text-shadow: ;
     color: white;
     font-weight: 600;
     width: 100;
