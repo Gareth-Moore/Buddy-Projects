@@ -15,6 +15,7 @@
 }
 
 body {
+    user-select: none;
     margin: 0;
     background: linear-gradient(var(--background), var(--black));
     min-height: 100vh;
@@ -80,6 +81,7 @@ tbody {
 
 
 td {
+    font-weight: bold;
     width: 100px;
     height: 100px;
     font-size: 1.7rem;
@@ -92,7 +94,7 @@ td {
     /* padding: 24px 32px; */
     border: 0;
     /* border-radius: 15px; */
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255, 255, 255, 0.231);
     /* backdrop-filter: blur(30px); */
     /* letter-spacing: 2px; */
     cursor: pointer;
