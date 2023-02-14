@@ -3,7 +3,31 @@
 }
 
 body {
+    display: grid;
+    justify-content: center;
     margin: 0;
     height: 100vh;
     background: linear-gradient(135deg, #0a01bb 0%, #0202ae 35%, #00d4ff 100%);
+}
+
+main {
+    position: relative;
+    transform: translateY(20%);
+    margin: 0 auto;
+    width: 430px;
+    height: 600px;
+    background-color: green;
+    border-radius: 15px;
+    border: 15px solid #ffcb05;
+}
+
+main::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: url('./images/background.jpg');
+    opacity: 0.25;
 }
