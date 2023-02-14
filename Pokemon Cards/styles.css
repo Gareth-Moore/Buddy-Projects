@@ -1,0 +1,9 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #0a01bb 0%, #0202ae 35%, #00d4ff 100%);
+}

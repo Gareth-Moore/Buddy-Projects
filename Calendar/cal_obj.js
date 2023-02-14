@@ -1,4 +1,4 @@
-const months = [
+const months_obj = [
     { 
         name: "January",
         position: 0,
