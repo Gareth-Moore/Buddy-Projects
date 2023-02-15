@@ -25,16 +25,12 @@ function fetch_pokemon (url) {
 
 // data as a single selected pokemon // data ~= pokemon
 let data = {}
-/*
-data.sprites.other.dream_world
-data.name
-data.height
-data.order
-data.stats[0].stat.name
 
-
-
-*/
+// data.sprites.other.dream_world
+// data.name
+// data.height
+// data.order
+// data.stats[0].stat.name
 
 
 

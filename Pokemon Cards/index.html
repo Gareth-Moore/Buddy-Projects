@@ -5,38 +5,53 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/gillsansc" rel="stylesheet">
     <title>Pokemon Cards</title>
 </head>
 <body>
-    <main class="container">
-        <div class="title">
-            <h1></h1>
-            <img src="" alt="">
-        </div>
-        <div class="image-container">
-            <img src="" alt="">
-        </div>
-        <div class="biometrics">
-            <p class="height"></p>
-            <p class="weight"></p>
-        </div>
-        <div class="stats">
-            <div class="list_1">
-                <ol>
-                <li></li>
-                <li></li>
-                    <li></li>
-                </ol>
+    <main id="container">
+        <div id="inner-container">
+            <div id="title">
+                <h1 id="name">Bulbasaur</h1>
+                <p id="health-points"><span>HP</span>60</p>
+                <div id="svg-icon-type">
+                    <img id="type-svg" src="./images/grass.svg" alt="">
+                </div>
             </div>
-            <div class="list_2">
-                <ol>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ol>
+            <div id="image-container">
+                <img id="display-image" src="./images/pp.svg" alt="">
+            </div>
+            <div id="details">
+                <div id="biometrics">
+                    <p id="height">NO. 001 Grass Pokémon  HT 7'1"  WT: 13.2 lbs</p>
+                </div>
+                <div id="abilities">
+                    <h2 id="ability_1">Vine Whip</h2>
+                    <p id="ability_1_description">Deals grass type damage and has a chance to parazyle the opponent.</p>
+                    <h2 id="ability_2">Leech Seed</h2>
+                    <p id="ability_2_description">Deals a small amount of damage and returns health to the pokemon. </p>
+                </div>
+                <div id="stats">
+                    <div id="list_1">
+                        <p>HP: 69</p>
+                        <p>Spd: 21</p>
+                    </div>
+                    <div id="list_2">
+                        <p>Atk: 15</p>
+                        <p>Def: 5</p>
+                    </div>
+                    <div id="list_3">
+                        <p>Sp. Atk: 44</p>
+                        <p>Sp. Def: 23</p>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 </body>
+<script src="./resources.js"></script>
 <script src="./script.js"></script>
 </html>
