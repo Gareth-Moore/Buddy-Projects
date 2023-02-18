@@ -62,7 +62,7 @@ console.log(" spd: " + pokemon_spd)
 
   function createPokemon(pokeData){
 
-   
+   //to be created
    
     
   }
