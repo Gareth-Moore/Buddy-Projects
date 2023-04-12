@@ -1,122 +1,100 @@
-/*const js_pokemon_object = [ TODO not sure how to do this....
-  {
-       pokemon_id: {
-          name: pokemon_name,
-          sprite: pokemon_sprite,
-          //weight: 220,
-          height: 12,
-      },
-          move: {
-              first_move: pokemon_move_one,
-              flavor_txt_one: pokemon_move_one_desc.flavor_text_entries[0].flavor_text,
-              second_move: pokemon_move_two,
-              flavor_txt_two: pokemon_move_two_desc.flavor_text_entries[0].flavor_text,
-          },
-          stats: {
-            hp: pokemon_hp,
-            atk:pokemon_atk,
-            def:pokemon_def,
-            spatk:pokemon_sp_atk,
-            spdef:pokemon_sp_def,
-            spd:pokemon_spd,
-          }
-          
-      }
-]
-console.log(js_pokemon_object) */
+const pokemonList = []; // create an empty array to store the Pokemon objects
 
-
-fetch('https://pokeapi.co/api/v2/pokemon/?limit=151') // you can use the "limit" here as part of the API to limit the amount of pokemon
-   .then(response => response.json())
-   .then(function(allpokemon){
-   allpokemon.results.forEach(function(pokemon){
-     fetchGenOneData(pokemon); 
-     
-   })
-  })
- 
-
-
-function getMoveTwoInfo(pokeData) {
-  var pokemon_move_two_desc = pokeData.moves[1].move.url //this fetches the description for move one
-  fetch(pokemon_move_two_desc)
+fetch('https://pokeapi.co/api/v2/pokemon/?limit=151')
   .then(response => response.json())
-  .then(function(pokemon_move_two_desc) {
-    console.log(pokemon_move_two_desc.flavor_text_entries[4].flavor_text)
+  .then(function (allpokemon) {
+    allpokemon.results.forEach(function (pokemon) {
+      fetchGenOneData(pokemon);
+    })
+  });
 
-  })
-  }
-  
-
-
-
-function getMoveOneInfo(pokeData) {
-var pokemon_move_one_desc = pokeData.moves[0].move.url //this fetches the description for move two
-fetch(pokemon_move_one_desc)
-.then(response => response.json())
-.then(function(pokemon_move_one_desc) {
-  console.log(pokemon_move_one_desc.flavor_text_entries[4].flavor_text)
-
-  
- 
-})
-}
-
-
- function fetchGenOneData(pokemon){
-  let url = pokemon.url //this is saving the pokemon url to a variable to us in a fetch.
+function fetchGenOneData(pokemon) {
+  let url = pokemon.url;
 
   fetch(url)
     .then(response => response.json())
-    .then(function(pokeData){
-    
-    
-// data.name
-let pokemon_name = pokeData.name;
-console.log("Pokemon name: " + pokemon_name)
+    .then(function (pokeData) {
+      let pokemonObj = {}; // create an empty object to store the Pokemon data
 
-//sprites
-let pokemon_sprite = pokeData.sprites.front_default;
-console.log("Pokemon sprite: " + pokemon_sprite)
+      // add the relevant properties to the Pokemon object
+      pokemonObj.name = pokeData.name;
+      pokemonObj.sprite = pokeData.sprites.front_default;
+      pokemonObj.id = pokeData.id;
+      pokemonObj.moves = [{ name: pokeData.moves[0].move.name, description: "" }
+      ];
+
+      if (pokeData.moves.length > 1) {
+        pokemonObj.moves.push({ name: pokeData.moves[1].move.name, description: "" });
+      }
+
+      pokemonObj.stats = {
+        hp: pokeData.stats[0].base_stat,
+        atk: pokeData.stats[1].base_stat,
+        def: pokeData.stats[2].base_stat,
+        sp_atk: pokeData.stats[3].base_stat,
+        sp_def: pokeData.stats[4].base_stat,
+        spd: pokeData.stats[5].base_stat
+      };
+
+      // call the getMoveInfo functions to fetch the move descriptions and add them to the Pokemon object
+      getMoveInfo(pokeData.moves[0].move.url)
+        .then(moveData => {
+          pokemonObj.moves[0].description = moveData.flavor_text_entries[4].flavor_text;
+
+          if (pokeData.moves.length > 1) {
+            return getMoveInfo(pokeData.moves[1].move.url);
+          } else {
+            return Promise.resolve();
+          }
+        })
+        .then(moveData => {
+          if (moveData) {
+            pokemonObj.moves[1].description = moveData.flavor_text_entries[4].flavor_text;
+          }
+
+          pokemonList.push(pokemonObj); // add the Pokemon object to the list
+         // console.log(pokemonObj); // log the Pokemon object to the console (optional)
+        });
+    });
+}
+
+function getMoveInfo(moveUrl) {
+  return fetch(moveUrl)
+    .then(response => response.json())
+    .then(moveData => {
+      return moveData;
+    });
+}
+// all of the above creates the pokemon objects
+// the below searches through the object
 
 
-//console.log(pokeData)
-// data.order
-let pokemon_id = pokeData.id;
-console.log("id: " + pokemon_id)
 
-// move 1
 
-let pokemon_move_one = pokeData.moves[0].move.name;
-console.log("first move: " + pokemon_move_one)
-getMoveOneInfo(pokeData)
+const form = document.querySelector('form');
+const input = document.querySelector('input[type="text"]');
 
-// move 2
+form.addEventListener('submit', function(e) {
+  e.preventDefault(); // prevent the form from submitting
 
-let pokemon_move_two = pokeData.moves[1].move.name;
-console.log("second move: " + pokemon_move_two)
-getMoveTwoInfo(pokeData)
+  const searchQuery = input.value.toLowerCase(); // get the search query entered by the user
+  let foundMatch = false; // keep track of whether a match was found
 
-// data.stats[0].stat.name this could be made simpler using a for loop
-let pokemon_hp = pokeData.stats[0].base_stat;
-console.log(" hp: " + pokemon_hp)
-let pokemon_atk = pokeData.stats[1].base_stat;
-console.log(" atk: " + pokemon_atk)
-let pokemon_def = pokeData.stats[2].base_stat;
-console.log(" def: " + pokemon_def)
-let pokemon_sp_atk = pokeData.stats[3].base_stat;
-console.log(" sp.atk: " + pokemon_sp_atk)
-let pokemon_sp_def = pokeData.stats[4].base_stat;
-console.log(" sp_def: " + pokemon_sp_def)
-let pokemon_spd = pokeData.stats[5].base_stat;
-console.log(" spd: " + pokemon_spd)
+  // loop through the pokemonList array and check for any matches
+  for (let i = 0; i < pokemonList.length; i++) {
+    const name = pokemonList[i].name.toLowerCase();
+    const id = pokemonList[i].id.toString(); // convert the ID to a string to enable searching
 
-  
-
-    })
- 
+    if (name.indexOf(searchQuery) !== -1 || id.indexOf(searchQuery) !== -1) {
+      console.log(pokemonList[i]); // display the matching Pokemon object in the console
+      foundMatch = true; // set foundMatch to true since we found a match
+    }
   }
-  
+
+  if (!foundMatch) {
+    alert('Please enter a valid Pokemon name or ID.');
+  }
+});
 
 
 
